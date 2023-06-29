@@ -1,8 +1,10 @@
 package com.example.myapplication.network
 
 import com.example.myapplication.network.dsi.Resource
+import com.example.myapplication.network.responses.BaseEthResponse
 import com.google.gson.Gson
 import com.rencap.broker.network.dsi.ErrorEntity
+import com.rencap.broker.network.dsi.ServerError
 import com.rencap.broker.network.dsi.ServerErrorEntity
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
@@ -79,7 +81,7 @@ private fun <T> errorData(response: Response<T>): ErrorEntity {
         errorEntity = ErrorEntity(ErrorEntity.ERROR_CODE_422)
     } else {
         errorEntity = ErrorEntity(ErrorEntity.ERROR_UNKNOUN_EXEPTION)
-        errorEntity.errorDesc = "Код ответа от сервера: " + response.code()
+        errorEntity.errorDesc = response.code().toString()
         return errorEntity
     }
     if (errorBody != null) {

@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.databinding.LayoutEtherTransactionBinding
 import com.example.myapplication.network.responses.EtherTransactionWrapper
+import com.example.myapplication.utils.AmountFormatter
 import com.example.myapplication.utils.date_formatters.DateUtil
 import com.example.myapplication.utils.web3.Web3AmountConverter
+import java.math.BigDecimal
 
 class TransactionsListAdapter(val interactionListener: InteractionListener) :
     RecyclerView.Adapter<EtherTransactionViewHolder>() {
@@ -48,8 +50,12 @@ class EtherTransactionViewHolder(
         } else {
             context.getString(R.string.direction_outcome)
         }
-        val ethValue = Web3AmountConverter.fromWei(transaction.value, Web3AmountConverter.Unit.ETHER)
-        val formattedValue = String.format("%.2f ETH", ethValue)
+        val ethValue = if (transaction.value == 0L && transaction.input.isNotEmpty() && transaction.input != "0x") {
+            Web3AmountConverter.decodeAmountFromInput(transaction)
+        } else {
+             Web3AmountConverter.fromWei(BigDecimal(transaction.value), Web3AmountConverter.Unit.ETHER)
+        }
+        val formattedValue = AmountFormatter.format(ethValue)
         binding.apply {
             transactionDateText.text = DateUtil.timestampToDateStr(transaction.timeStamp)
             transactionReceiverText.text = transaction.to

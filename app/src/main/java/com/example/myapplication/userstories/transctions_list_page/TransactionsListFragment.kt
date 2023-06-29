@@ -68,17 +68,14 @@ class TransactionsListFragment : Fragment(R.layout.fragment_transactions_list) {
                     showError(state.text ?: "")
                 }
                 TransactionsListViewModel.TransactionsListState.RequestProcession -> {
-                    binding.transactionsRecyclerView.visibility = View.GONE
-                    binding.errorText.visibility = View.GONE
-                    binding.refreshButton.visibility = View.GONE
-                    binding.requestProgress.visibility = View.VISIBLE
+                    showProgress()
                 }
                 is TransactionsListViewModel.TransactionsListState.TransactionsReceived -> {
-                    binding.transactionsRecyclerView.visibility = View.VISIBLE
-                    binding.errorText.visibility = View.GONE
-                    binding.refreshButton.visibility = View.GONE
-                    binding.requestProgress.visibility = View.GONE
-                    recyclerViewAdapter.setData(state.transactions)
+                    if (state.transactions.isEmpty()) {
+                        showError(requireContext().getString(R.string.empty_transactions_list))
+                    } else {
+                        fillTransactions(state.transactions)
+                    }
                 }
 
                 TransactionsListViewModel.TransactionsListState.UnknownErrorState -> {
@@ -86,6 +83,21 @@ class TransactionsListFragment : Fragment(R.layout.fragment_transactions_list) {
                 }
             }
         }
+    }
+
+    private fun showProgress() {
+        binding.transactionsRecyclerView.visibility = View.GONE
+        binding.errorText.visibility = View.GONE
+        binding.refreshButton.visibility = View.GONE
+        binding.requestProgress.visibility = View.VISIBLE
+    }
+
+    private fun fillTransactions(transactions: List<EtherTransactionWrapper>) {
+        binding.transactionsRecyclerView.visibility = View.VISIBLE
+        binding.errorText.visibility = View.GONE
+        binding.refreshButton.visibility = View.GONE
+        binding.requestProgress.visibility = View.GONE
+        recyclerViewAdapter.setData(transactions)
     }
 
     private fun showError(text: String) {

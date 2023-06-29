@@ -6,14 +6,17 @@ import androidx.lifecycle.ViewModel
 import com.example.myapplication.network.clients.services.EtherScanServiceApi
 import com.example.myapplication.network.responses.EtherTransactionEntity
 import com.example.myapplication.network.responses.EtherTransactionWrapper
+import com.example.myapplication.network.responses.TransactionsList
 import com.example.myapplication.utils.coroutines.ICoroutineSupport
 import com.example.myapplication.utils.web3.Web3Validator
+import com.google.gson.Gson
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class TransactionsListViewModel @Inject constructor(
     private val api: EtherScanServiceApi,
+    private val gson: Gson,
 ) : ViewModel(), ICoroutineSupport {
     sealed class TransactionsListState {
         object RequestProcession : TransactionsListState()
@@ -36,11 +39,15 @@ class TransactionsListViewModel @Inject constructor(
         _transactionsListState.postValue(TransactionsListState.RequestProcession)
         val result = api.getTransactions(currentAddress)
         val errorEntity = result.errorEntity
-        val data = result.data?.result
+        val data = result.data
         if (errorEntity != null) {
             _transactionsListState.postValue(TransactionsListState.ErrorState(errorEntity.errorDesc))
+        } else if (data != null && data.status != 1) {
+            val errorText = data.result.asString
+            _transactionsListState.postValue(TransactionsListState.ErrorState(errorText))
         } else if (data != null) {
-            val transactions = wrapTransactions(data)
+            val parsedTransactions = gson.fromJson(data.result, TransactionsList::class.java)
+            val transactions = wrapTransactions(parsedTransactions)
             _transactionsListState.postValue(TransactionsListState.TransactionsReceived(transactions))
         } else {
             _transactionsListState.postValue(TransactionsListState.UnknownErrorState)
@@ -48,7 +55,7 @@ class TransactionsListViewModel @Inject constructor(
     }
 
     private fun wrapTransactions(data: List<EtherTransactionEntity>): List<EtherTransactionWrapper> {
-        return data.map {
+        return data.filter { it.input!="0x" }.map {
             EtherTransactionWrapper(
                 it,
                 it.from != currentAddress

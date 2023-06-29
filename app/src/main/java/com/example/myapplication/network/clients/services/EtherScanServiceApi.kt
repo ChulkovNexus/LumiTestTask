@@ -13,7 +13,7 @@ class EtherScanServiceApi(
 
     suspend fun getTransactions(
         address: String,
-    ): Resource<BaseEthResponse<List<EtherTransactionEntity>>> {
+    ): Resource<BaseEthResponse> {
         val service = ServiceGenerator.createService(EtherScanServiceClient::class.java, retrofit)
 
         val request = service.getTransactions(

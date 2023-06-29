@@ -18,5 +18,5 @@ interface EtherScanServiceClient {
         @Query("page") page: String?,
         @Query("offset") offset: String?,
         @Query("sort") sort: String?,
-    ): Deferred<Response<BaseEthResponse<List<EtherTransactionEntity>>>>
+    ): Deferred<Response<BaseEthResponse>>
 }

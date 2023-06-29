@@ -34,7 +34,6 @@ class RequestTransactionsFragment : Fragment(R.layout.fragment_request_transacti
             requestButton.setOnClickListener {
                 openTransactionsList()
             }
-            accountInputEditText.setText("0x888841259b9B8A3385245f1e2A5E4ADbCeb3B790")
         }
     }
 

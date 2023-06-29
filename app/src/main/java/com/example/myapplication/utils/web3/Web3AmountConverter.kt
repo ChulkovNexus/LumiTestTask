@@ -1,6 +1,11 @@
 package com.example.myapplication.utils.web3
 
+import android.content.Context
+import com.example.myapplication.R
+import com.example.myapplication.network.responses.EtherTransactionEntity
+import com.example.myapplication.utils.AmountFormatter
 import java.math.BigDecimal
+import java.math.BigInteger
 
 object Web3AmountConverter {
     fun fromWei(number: String?, unit: Unit): BigDecimal {
@@ -53,5 +58,57 @@ object Web3AmountConverter {
                 return Unit.valueOf(name!!)
             }
         }
+    }
+
+    fun decodeInput(context: Context, currentTransaction: EtherTransactionEntity): String {
+        val inputData = currentTransaction.input
+        var resultText = context.getString(R.string.no_smart_contract_data)
+
+        // Проверяем сигнатуру функции
+        when (inputData.take(10)) {
+            // 0x095ea7b3 is the Method ID for approve(address,uint256)
+            "0x095ea7b3" -> {
+                val spenderAddress = "0x" + inputData.slice(34..73)
+                val amount = BigInteger(inputData.slice(74 until inputData.length), 16)
+                val amountText = AmountFormatter.format(fromWei(BigDecimal(amount), Web3AmountConverter.Unit.ETHER))
+                resultText = context.getString(
+                    R.string.approve_smart_contract_text,
+                    spenderAddress,
+                    amountText
+                )
+            }
+            // 0xa9059cbb is the Method ID for transfer(address,uint256)
+            "0xa9059cbb" -> {
+                val toAddress = "0x" + inputData.slice(34..73)
+                val amount = BigInteger(inputData.slice(74 until inputData.length), 16)
+
+                val amountText = AmountFormatter.format(fromWei(BigDecimal(amount), Web3AmountConverter.Unit.ETHER))
+                resultText = context.getString(
+                    R.string.transfer_smart_contract_text,
+                    toAddress,
+                    amountText
+                )
+            }
+        }
+        return resultText
+    }
+
+    fun decodeAmountFromInput(currentTransaction: EtherTransactionEntity): BigDecimal {
+        val inputData = currentTransaction.input
+
+        // Проверяем сигнатуру функции
+        when (inputData.take(10)) {
+            // 0x095ea7b3 is the Method ID for approve(address,uint256)
+            "0x095ea7b3" -> {
+                val amount = BigInteger(inputData.slice(74 until inputData.length), 16)
+                return fromWei(BigDecimal(amount), Web3AmountConverter.Unit.ETHER)
+            }
+            // 0xa9059cbb is the Method ID for transfer(address,uint256)
+            "0xa9059cbb" -> {
+                val amount = BigInteger(inputData.slice(74 until inputData.length), 16)
+                return fromWei(BigDecimal(amount), Web3AmountConverter.Unit.ETHER)
+            }
+        }
+        return BigDecimal(0)
     }
 }

@@ -1,7 +1,9 @@
 package com.example.myapplication.network.responses
 
-data class  BaseEthResponse<T> (
+import com.google.gson.JsonElement
+
+data class  BaseEthResponse (
     val status: Int,
     val message: String,
-    val result: T,
+    val result: JsonElement,
 )

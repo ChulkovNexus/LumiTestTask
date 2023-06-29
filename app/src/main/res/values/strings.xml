@@ -16,8 +16,7 @@
     <string name="direction_outcome">Исходящая</string>
     <string name="unknown_error">Произошла неизвестная ошибка</string>
     <string name="no_smart_contract_data">Нет данных о вызове функций смарт контрактов</string>
-    <string name="approve_smart_contract_text">Вызван метод Approve/n Адрес, которому разрешено
-        снимать токены:/n %s Колличество токенов: %s</string>
-    <string name="transfer_smart_contract_text">Вызван метод Transfer/n
-        Адрес назначения:/n %s Колличество токенов: %s</string>
+    <string name="approve_smart_contract_text">Вызван метод Approve\n Адрес, которому разрешено снимать токены: %s\n Колличество токенов: %s</string>
+    <string name="transfer_smart_contract_text">Вызван метод Transfer\n Адрес назначения: %s\n Колличество токенов: %s</string>
+    <string name="empty_transactions_list">Список транзакций пуст</string>
 </resources>

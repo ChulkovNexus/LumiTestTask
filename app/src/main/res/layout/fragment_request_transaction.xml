@@ -17,9 +17,10 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/account_input_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:hint="@string/account_input_hint"
             android:importantForAutofill="noExcludeDescendants"
+            android:inputType="textMultiLine"
             android:singleLine="true" />
     </com.google.android.material.textfield.TextInputLayout>
 

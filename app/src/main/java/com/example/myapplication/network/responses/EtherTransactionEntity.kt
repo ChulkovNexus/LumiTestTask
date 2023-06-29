@@ -11,7 +11,7 @@ data class EtherTransactionEntity(
     val transactionIndex: Int,
     val from: String,
     val to: String,
-    val value: String,
+    val value: Long,
     val gas: Long,
     val gasPrice: Long,
     val isError: Int,
@@ -24,6 +24,8 @@ data class EtherTransactionEntity(
     val methodId: String,
     val functionName: String,
 ): Serializable
+
+class TransactionsList: ArrayList<EtherTransactionEntity>()
 
 data class EtherTransactionWrapper(
     val transaction: EtherTransactionEntity,
