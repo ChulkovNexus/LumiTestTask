@@ -41,7 +41,7 @@ class TransactionsListViewModel @Inject constructor(
         val errorEntity = result.errorEntity
         val data = result.data
         if (errorEntity != null) {
-            _transactionsListState.postValue(TransactionsListState.ErrorState(errorEntity.errorDesc))
+            _transactionsListState.postValue(TransactionsListState.ErrorState(errorEntity.text))
         } else if (data != null && data.status != 1) {
             val errorText = data.result.asString
             _transactionsListState.postValue(TransactionsListState.ErrorState(errorText))
