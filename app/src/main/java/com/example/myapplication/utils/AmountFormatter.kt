@@ -14,8 +14,9 @@ object AmountFormatter {
     }
 
     private fun trimNulls(string: String): String {
+        val divider = if (string.contains(",")) "," else "."
         var stringDouble = string
-        var commaIndex = stringDouble.indexOf(",")
+        var commaIndex = stringDouble.indexOf(divider)
 
         if (commaIndex != -1) {
             for (i in stringDouble.length - 1 downTo commaIndex) {
@@ -26,9 +27,9 @@ object AmountFormatter {
                 }
             }
 
-            commaIndex = stringDouble.indexOf(",")
+            commaIndex = stringDouble.indexOf(divider)
             if (commaIndex == stringDouble.length - 1) {
-                stringDouble = stringDouble.substringBefore(",")
+                stringDouble = stringDouble.substringBefore(divider)
             }
         }
         return stringDouble

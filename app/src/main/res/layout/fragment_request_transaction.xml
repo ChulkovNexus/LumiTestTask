@@ -28,13 +28,15 @@
         android:id="@+id/wrong_address_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:text="@string/wrong_address_error"
         android:textColor="@android:color/holo_red_dark"
+        android:visibility="gone"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/account_input_layout"
-    />
+        app:layout_constraintTop_toBottomOf="@id/account_input_layout" />
+
     <Button
         android:id="@+id/request_button"
         android:layout_width="wrap_content"

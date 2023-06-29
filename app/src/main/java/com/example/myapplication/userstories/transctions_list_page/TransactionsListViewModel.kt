@@ -55,7 +55,7 @@ class TransactionsListViewModel @Inject constructor(
     }
 
     private fun wrapTransactions(data: List<EtherTransactionEntity>): List<EtherTransactionWrapper> {
-        return data.filter { it.input!="0x" }.map {
+        return data.map {
             EtherTransactionWrapper(
                 it,
                 it.from != currentAddress
