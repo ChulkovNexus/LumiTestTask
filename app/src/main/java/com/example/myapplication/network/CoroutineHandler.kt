@@ -1,11 +1,9 @@
 package com.example.myapplication.network
 
 import com.example.myapplication.network.dsi.Resource
-import com.example.myapplication.network.responses.BaseEthResponse
 import com.google.gson.Gson
-import com.rencap.broker.network.dsi.ErrorEntity
-import com.rencap.broker.network.dsi.ServerError
-import com.rencap.broker.network.dsi.ServerErrorEntity
+import com.example.myapplication.network.dsi.ErrorEntity
+import com.example.myapplication.network.dsi.ServerErrorEntity
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

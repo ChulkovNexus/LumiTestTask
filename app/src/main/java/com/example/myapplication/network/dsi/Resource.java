@@ -5,8 +5,6 @@ import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.rencap.broker.network.dsi.ErrorEntity;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.Retention;
