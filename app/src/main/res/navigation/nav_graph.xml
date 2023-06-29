@@ -3,26 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/RequestTransactionsFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.example.myapplication.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
-
+        android:id="@+id/RequestTransactionsFragment"
+        android:name="com.example.myapplication.userstories.request_ransactions_page.RequestTransactionsFragment"
+        android:label="@string/request_transactions_fragment_label"
+        tools:layout="@layout/fragment_request_transaction">
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_RequestTransactionsFragment_to_TransactionsListFragment"
+            app:destination="@id/TransactionsListFragment" />
     </fragment>
+
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.myapplication.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
+        android:id="@+id/TransactionsListFragment"
+        android:name="com.example.myapplication.userstories.transctions_list_page.TransactionsListFragment"
+        android:label="@string/transactions_list_fragment_label"
+        tools:layout="@layout/fragment_transactions_list">
         <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+            android:id="@+id/action_TransactionsListFragment_to_CurrentTransactionDialog"
+            app:destination="@id/TransactionInputDialog" />
+        <argument
+            android:name="account_address"
+            app:argType="string" />
     </fragment>
+
+    <dialog
+        android:id="@+id/TransactionInputDialog"
+        android:name="com.example.myapplication.userstories.current_transaction.TransactionInputDialog"
+        android:label="fragment_role_choice"
+        tools:layout="@layout/dialog_transaction_input">
+        <argument
+            android:name="current_transaction"
+            app:argType="com.example.myapplication.network.responses.EtherTransactionEntity" />
+    </dialog>
 </navigation>

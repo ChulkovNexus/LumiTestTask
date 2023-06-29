@@ -1,12 +1,23 @@
 <resources>
-    <string name="app_name">My Application</string>
-    <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
+    <string name="app_name">Lumi Test Exercise</string>
+    <!-- request_transactions -->
+    <string name="request_transactions_fragment_label">Ввод адреса</string>
+    <string name="account_input_hint">Введите адрес Ethereum</string>
+    <string name="request_button_text">Получить</string>
+    <string name="wrong_address_error">Не правильный адрес</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!-- transactions_list -->
+    <string name="refres_text">Обновить</string>
+    <string name="transactions_list_fragment_label">Список транзакций</string>
+    <string name="sender_title">Отправитель:</string>
+    <string name="receiver_title">Получатель:</string>
+    <string name="direction_title">Направление:</string>
+    <string name="direction_income">Входящая</string>
+    <string name="direction_outcome">Исходящая</string>
+    <string name="unknown_error">Произошла неизвестная ошибка</string>
+    <string name="no_smart_contract_data">Нет данных о вызове функций смарт контрактов</string>
+    <string name="approve_smart_contract_text">Вызван метод Approve/n Адрес, которому разрешено
+        снимать токены:/n %s Колличество токенов: %s</string>
+    <string name="transfer_smart_contract_text">Вызван метод Transfer/n
+        Адрес назначения:/n %s Колличество токенов: %s</string>
 </resources>
